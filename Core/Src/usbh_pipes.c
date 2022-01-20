@@ -73,7 +73,7 @@ static uint16_t USBH_GetFreePipe(USBH_HandleTypeDef *phost);
 
 /**
   * @brief  USBH_Open_Pipe
-  *         Open a  pipe
+  *         Open a pipe
   * @param  phost: Host Handle
   * @param  pipe_num: Pipe Number
   * @param  dev_address: USB Device address allocated to attached device
@@ -94,7 +94,7 @@ USBH_StatusTypeDef USBH_OpenPipe(USBH_HandleTypeDef *phost, uint8_t pipe_num,
 
 /**
   * @brief  USBH_ClosePipe
-  *         Close a  pipe
+  *         Close a pipe
   * @param  phost: Host Handle
   * @param  pipe_num: Pipe Number
   * @retval USBH Status
@@ -118,7 +118,7 @@ uint8_t USBH_AllocPipe(USBH_HandleTypeDef *phost, uint8_t ep_addr)
 {
   uint16_t pipe;
 
-  pipe =  USBH_GetFreePipe(phost);
+  pipe = USBH_GetFreePipe(phost);
 
   if (pipe != 0xFFFFU)
   {

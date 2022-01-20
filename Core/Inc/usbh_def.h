@@ -99,6 +99,7 @@ extern "C" {
 #define USBH_MAX_DATA_BUFFER                               0x400U
 #endif
 
+/* Maximum endpoint packet size (see MPSIZ[10:0] in USB_OTG_HCCHAR) */
 #define USBH_MAX_EP_PACKET_SIZE                            0x400U
 
 #define  USB_LEN_DESC_HDR                                  0x02U
@@ -109,7 +110,7 @@ extern "C" {
 #define  USB_LEN_OTG_DESC                                  0x03U
 #define  USB_LEN_SETUP_PKT                                 0x08U
 
-/* bmRequestType :D7 Data Phase Transfer Direction  */
+/* bmRequestType D7 Data Phase Transfer Direction  */
 #define  USB_REQ_DIR_MASK                                  0x80U
 #define  USB_H2D                                           0x00U
 #define  USB_D2H                                           0x80U
@@ -127,7 +128,7 @@ extern "C" {
 #define  USB_REQ_RECIPIENT_OTHER                           0x03U
 
 /* Table 9-4. Standard Request Codes  */
-/* bRequest , Value */
+/* bRequest Value */
 #define  USB_REQ_GET_STATUS                                0x00U
 #define  USB_REQ_CLEAR_FEATURE                             0x01U
 #define  USB_REQ_SET_FEATURE                               0x03U
@@ -238,7 +239,7 @@ typedef union _USB_Setup
 }
 USB_Setup_TypeDef;
 
-typedef  struct  _DescHeader
+typedef struct _DescHeader
 {
   uint8_t  bLength;
   uint8_t  bDescriptorType;
@@ -302,7 +303,7 @@ typedef struct _ConfigurationDescriptor
   uint8_t   bNumInterfaces;       /* Number of Interfaces */
   uint8_t   bConfigurationValue;  /* Value to use as an argument to select this configuration*/
   uint8_t   iConfiguration;       /* Index of String Descriptor Describing this configuration */
-  uint8_t   bmAttributes;         /* D7 Bus Powered , D6 Self Powered, D5 Remote Wakeup , D4..0 Reserved (0)*/
+  uint8_t   bmAttributes;         /* D7 Bus Powered, D6 Self Powered, D5 Remote Wakeup, D4..0 Reserved (0)*/
   uint8_t   bMaxPower;            /* Maximum Power Consumption */
   USBH_InterfaceDescTypeDef        Itf_Desc[USBH_MAX_NUM_INTERFACES];
 }
@@ -330,7 +331,6 @@ typedef enum
   USBH_SPEED_HIGH  = 0U,
   USBH_SPEED_FULL  = 1U,
   USBH_SPEED_LOW   = 2U,
-
 } USBH_SpeedTypeDef;
 
 /* Following states are used for gState */
@@ -425,25 +425,24 @@ typedef struct
   USB_Setup_TypeDef     setup;
   CTRL_StateTypeDef     state;
   uint8_t               errorcount;
-
 } USBH_CtrlTypeDef;
 
 /* Attached device structure */
 typedef struct
 {
-  uint8_t                           CfgDesc_Raw[USBH_MAX_SIZE_CONFIGURATION];
-  uint8_t                           Data[USBH_MAX_DATA_BUFFER];
-  uint8_t                           address;
-  uint8_t                           speed;
-  uint8_t                           EnumCnt;
-  uint8_t                           RstCnt;
-  __IO uint8_t                      is_connected;
-  __IO uint8_t                      is_disconnected;
-  __IO uint8_t                      is_ReEnumerated;
-  uint8_t                           PortEnabled;
-  uint8_t                           current_interface;
-  USBH_DevDescTypeDef               DevDesc;
-  USBH_CfgDescTypeDef               CfgDesc;
+  uint8_t               CfgDesc_Raw[USBH_MAX_SIZE_CONFIGURATION];
+  uint8_t               Data[USBH_MAX_DATA_BUFFER];
+  uint8_t               address;
+  uint8_t               speed;
+  uint8_t               EnumCnt;
+  uint8_t               RstCnt;
+  __IO uint8_t          is_connected;
+  __IO uint8_t          is_disconnected;
+  __IO uint8_t          is_ReEnumerated;
+  uint8_t               PortEnabled;
+  uint8_t               current_interface;
+  USBH_DevDescTypeDef   DevDesc;
+  USBH_CfgDescTypeDef   CfgDesc;
 } USBH_DeviceTypeDef;
 
 struct _USBH_HandleTypeDef;
@@ -464,8 +463,8 @@ typedef struct
 /* USB Host handle structure */
 typedef struct _USBH_HandleTypeDef
 {
-  __IO HOST_StateTypeDef     gState;       /*  Host State Machine Value */
-  ENUM_StateTypeDef     EnumState;    /* Enumeration state Machine */
+  __IO HOST_StateTypeDef     gState;    /* Host State Machine Value */
+  ENUM_StateTypeDef     EnumState;      /* Enumeration state Machine */
   CMD_StateTypeDef      RequestState;
   USBH_CtrlTypeDef      Control;
   USBH_DeviceTypeDef    device;

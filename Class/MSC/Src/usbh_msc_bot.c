@@ -537,17 +537,17 @@ static USBH_StatusTypeDef USBH_MSC_BOT_Abort(USBH_HandleTypeDef *phost, uint8_t 
   UNUSED(lun);
 
   USBH_StatusTypeDef status = USBH_FAIL;
-  MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
+  MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *)phost->pActiveClass->pData;
 
   switch (dir)
   {
-    case BOT_DIR_IN :
-      /* send ClrFeture on Bulk IN endpoint */
+    case BOT_DIR_IN:
+      /* send ClrFeature on Bulk IN endpoint */
       status = USBH_ClrFeature(phost, MSC_Handle->InEp);
 
       break;
 
-    case BOT_DIR_OUT :
+    case BOT_DIR_OUT:
       /*send ClrFeature on Bulk OUT endpoint */
       status = USBH_ClrFeature(phost, MSC_Handle->OutEp);
       break;
@@ -572,7 +572,6 @@ static USBH_StatusTypeDef USBH_MSC_BOT_Abort(USBH_HandleTypeDef *phost, uint8_t 
   *     2. the CSW is 13 (Dh) bytes in length,
   *     3. dCSWTag matches the dCBWTag from the corresponding CBW.
   */
-
 static BOT_CSWStatusTypeDef USBH_MSC_DecodeCSW(USBH_HandleTypeDef *phost)
 {
   MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;

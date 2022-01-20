@@ -77,9 +77,9 @@ static void USBH_ParseDevDesc(USBH_DevDescTypeDef *dev_desc,
 static USBH_StatusTypeDef USBH_ParseCfgDesc(USBH_HandleTypeDef *phost,
                                             uint8_t *buf, uint16_t length);
 
-static USBH_StatusTypeDef USBH_ParseEPDesc(USBH_HandleTypeDef *phost, USBH_EpDescTypeDef  *ep_descriptor, uint8_t *buf);
+static USBH_StatusTypeDef USBH_ParseEPDesc(USBH_HandleTypeDef *phost, USBH_EpDescTypeDef *ep_descriptor, uint8_t *buf);
 static void USBH_ParseStringDesc(uint8_t *psrc, uint8_t *pdest, uint16_t length);
-static void USBH_ParseInterfaceDesc(USBH_InterfaceDescTypeDef  *if_descriptor, uint8_t *buf);
+static void USBH_ParseInterfaceDesc(USBH_InterfaceDescTypeDef *if_descriptor, uint8_t *buf);
 
 
 /**
@@ -422,8 +422,9 @@ static USBH_StatusTypeDef USBH_ParseCfgDesc(USBH_HandleTypeDef *phost, uint8_t *
   cfg_desc->bmAttributes        = *(uint8_t *)(buf + 7);
   cfg_desc->bMaxPower           = *(uint8_t *)(buf + 8);
 
-  /* Make sure that the Configuration descriptor's bLength is equal to USB_CONFIGURATION_DESC_SIZE */
-  if (cfg_desc->bLength  != USB_CONFIGURATION_DESC_SIZE)
+
+  /* Make sure that the configuration descriptor's bLength is equal to USB_CONFIGURATION_DESC_SIZE */
+  if (cfg_desc->bLength != USB_CONFIGURATION_DESC_SIZE)
   {
     cfg_desc->bLength = USB_CONFIGURATION_DESC_SIZE;
   }
@@ -513,7 +514,7 @@ static USBH_StatusTypeDef USBH_ParseCfgDesc(USBH_HandleTypeDef *phost, uint8_t *
   * @retval None
   */
 static void USBH_ParseInterfaceDesc(USBH_InterfaceDescTypeDef *if_descriptor,
-                                     uint8_t *buf)
+                                    uint8_t *buf)
 {
   if_descriptor->bLength            = *(uint8_t *)(buf + 0);
   if_descriptor->bDescriptorType    = *(uint8_t *)(buf + 1);
@@ -657,9 +658,9 @@ static void USBH_ParseStringDesc(uint8_t *psrc, uint8_t *pdest, uint16_t length)
   * @param  ptr: data pointer inside the cfg descriptor
   * @retval next header
   */
-USBH_DescHeader_t  *USBH_GetNextDesc(uint8_t   *pbuf, uint16_t  *ptr)
+USBH_DescHeader_t *USBH_GetNextDesc(uint8_t *pbuf, uint16_t *ptr)
 {
-  USBH_DescHeader_t  *pnext;
+  USBH_DescHeader_t *pnext;
 
   *ptr += ((USBH_DescHeader_t *)(void *)pbuf)->bLength;
   pnext = (USBH_DescHeader_t *)(void *)((uint8_t *)(void *)pbuf + \

@@ -483,7 +483,7 @@ USBH_StatusTypeDef  USBH_Process(USBH_HandleTypeDef *phost)
 
   switch (phost->gState)
   {
-    case HOST_IDLE :
+    case HOST_IDLE:
 
       if ((phost->device.is_connected) != 0U)
       {
@@ -549,7 +549,7 @@ USBH_StatusTypeDef  USBH_Process(USBH_HandleTypeDef *phost)
 #endif
       break;
 
-    case HOST_DEV_ATTACHED :
+    case HOST_DEV_ATTACHED:
 
       if (phost->pUser != NULL)
       {
@@ -654,7 +654,7 @@ USBH_StatusTypeDef  USBH_Process(USBH_HandleTypeDef *phost)
 #endif
       break;
 
-    case  HOST_SET_WAKEUP_FEATURE:
+    case HOST_SET_WAKEUP_FEATURE:
 
       if (((phost->device.CfgDesc.bmAttributes) & (1U << 5)) != 0U)
       {
@@ -785,7 +785,7 @@ USBH_StatusTypeDef  USBH_Process(USBH_HandleTypeDef *phost)
       }
       break;
 
-    case HOST_DEV_DISCONNECTED :
+    case HOST_DEV_DISCONNECTED:
       phost->device.is_disconnected = 0U;
 
       (void)DeInitStateMachine(phost);
@@ -827,7 +827,7 @@ USBH_StatusTypeDef  USBH_Process(USBH_HandleTypeDef *phost)
       break;
 
     case HOST_ABORT_STATE:
-    default :
+    default:
       break;
   }
   return USBH_OK;
@@ -1204,7 +1204,7 @@ void USBH_LL_IncTimer(USBH_HandleTypeDef *phost)
   * @param  phost: Host Handle
   * @retval None
   */
-static void  USBH_HandleSof(USBH_HandleTypeDef *phost)
+static void USBH_HandleSof(USBH_HandleTypeDef *phost)
 {
   if ((phost->gState == HOST_CLASS) && (phost->pActiveClass != NULL))
   {
@@ -1268,7 +1268,7 @@ uint8_t USBH_IsPortEnabled(USBH_HandleTypeDef *phost)
   * @param  phost: Host Handle
   * @retval USBH_Status
   */
-USBH_StatusTypeDef  USBH_LL_Connect(USBH_HandleTypeDef *phost)
+USBH_StatusTypeDef USBH_LL_Connect(USBH_HandleTypeDef *phost)
 {
   phost->device.is_connected = 1U;
   phost->device.is_disconnected = 0U;
@@ -1294,7 +1294,7 @@ USBH_StatusTypeDef  USBH_LL_Connect(USBH_HandleTypeDef *phost)
   * @param  phost: Host Handle
   * @retval USBH_Status
   */
-USBH_StatusTypeDef  USBH_LL_Disconnect(USBH_HandleTypeDef *phost)
+USBH_StatusTypeDef USBH_LL_Disconnect(USBH_HandleTypeDef *phost)
 {
   /* update device connection states */
   phost->device.is_disconnected = 1U;
@@ -1304,7 +1304,7 @@ USBH_StatusTypeDef  USBH_LL_Disconnect(USBH_HandleTypeDef *phost)
   /* Stop Host */
   (void)USBH_LL_Stop(phost);
 
-  /* FRee Control Pipes */
+  /* Free Control Pipes */
   (void)USBH_FreePipe(phost, phost->Control.pipe_in);
   (void)USBH_FreePipe(phost, phost->Control.pipe_out);
 #if (USBH_USE_OS == 1U)
